@@ -1,5 +1,8 @@
+# Write a brute-force algorithm to find a partial collision 
+
 import hashlib
 import os
+import random
 
 def hash_collision(k):
     if not isinstance(k,int):
@@ -15,11 +18,17 @@ def hash_collision(k):
     # k is the number of bits to be matched
     # The return variables, x and y, should be encoded as bytes in the end.
     # if the hash of x and y match, return x and y
-
-    for x in range(2**k):
-        for y in range(2**k):
-            if hashlib.sha256(str(x).encode()).hexdigest()[-k:] == hashlib.sha256(str(y).encode()).hexdigest()[-k:]:
-                return(str(x).encode(),str(y).encode())
     
+    # randomly generate a integer x 
+    x = random.randint(0,2**k)
+    y = random.randint(0,2**k)
 
+    # while SHA256(x) and SHA256(y) do not match on their final k bits, increment x and y
+    while hashlib.sha256(str(x).encode()).hexdigest()[-k:] != hashlib.sha256(str(y).encode()).hexdigest()[-k:]:
+        x = x+1
+        y = y+1
+  
+    # break the while loop when SHA256(x) and SHA256(y) match on their final k bits
+    # return x and y
+    return(str(x).encode(),str(y).encode())
     
