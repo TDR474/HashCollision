@@ -23,7 +23,3 @@ def hash_collision(k):
             y_hash = hashlib.sha256(str(y).encode('utf-8')).hexdigest()
             if x_hash[-k:] == y_hash[-k:]:
                 return(str(x).encode('utf-8'),str(y).encode('utf-8'))
-
-    x = b'\x00'
-    y = b'\x00'
-    return( x, y )
